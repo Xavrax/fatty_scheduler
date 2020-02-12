@@ -1,8 +1,8 @@
 use crate::types::task_id::TaskId;
 
-trait TaskCondition {
-    fn get_task_id() -> TaskId;
-    fn is_finished() -> bool;
-    fn should_trigger() -> bool;
-    fn update(dt : std::time::Duration);
+pub trait TaskCondition {
+    fn is_finished(&self) -> bool;
+    fn should_trigger(&self) -> bool;
+    fn update(&mut self, dt : std::time::Duration);
+    fn finish(&mut self);
 }
