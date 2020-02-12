@@ -1,6 +1,6 @@
 use crate::types::id::TaskId;
 
-struct ScheduledTask<Predicate : Fn()> {
+pub struct ScheduledTask<Predicate : Fn()> {
     id : TaskId,
     action : Predicate
 }

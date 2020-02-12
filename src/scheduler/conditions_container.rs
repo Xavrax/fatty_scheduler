@@ -8,7 +8,7 @@ pub struct ConditionContainer {
 }
 
 impl ConditionContainer {
-    pub fn update_and_get_triggered(&mut self, dt : Duration) -> Vec<TaskId> {
+    pub fn update_and_get_triggered(&mut self, dt : &Duration) -> Vec<TaskId> {
         let mut triggered = Vec::new();
 
         self.containers
@@ -25,5 +25,15 @@ impl ConditionContainer {
         );
 
         triggered
+    }
+
+    pub fn trigger(&mut self, id : TaskId) {
+        match self.containers
+            .iter_mut()
+            .into_iter()
+            .find(|c| c.get_id() == id) {
+            Some(mut c) => c.trigger(),
+            _ => println!("Task with id {} does not exists!", id)
+        };
     }
 }

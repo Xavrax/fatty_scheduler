@@ -11,6 +11,18 @@ pub struct Conditions {
 }
 
 impl Conditions {
+    pub fn new(id : TaskId) -> Conditions {
+        let conditions = Vec::<Box<TaskCondition>>::new();
+        Conditions {
+            id,
+            conditions
+        }
+    }
+
+    pub fn add(&mut self, condition : Box<TaskCondition>) {
+        self.conditions.push(condition);
+    }
+
     pub fn are_finished(&self) -> bool {
         self.conditions
             .iter()
@@ -24,7 +36,7 @@ impl Conditions {
             .all(|c| c.should_trigger())
     }
 
-    pub fn update (&mut self, dt : Duration) {
+    pub fn update (&mut self, dt : &Duration) {
         self.conditions
             .iter_mut()
             .for_each(|c| c.update(dt))
