@@ -8,6 +8,17 @@ pub struct ConditionContainer {
 }
 
 impl ConditionContainer {
+    pub fn new() -> ConditionContainer {
+        let containers = Vec::<Conditions>::new();
+        ConditionContainer{
+            containers
+        }
+    }
+
+//    pub fn add(&mut self, id : TaskId) {
+//        self.containers.push(Conditions::new(id))
+//    }
+
     pub fn update_and_get_triggered(&mut self, dt : &Duration) -> Vec<TaskId> {
         let mut triggered = Vec::new();
 
