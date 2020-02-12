@@ -1,1 +1,1 @@
-pub type TaskId = u32;
+pub type TaskId = usize;

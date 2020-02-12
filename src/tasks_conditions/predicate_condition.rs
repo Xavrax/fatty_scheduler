@@ -17,7 +17,7 @@ impl<Predicate : Fn() -> bool> TaskCondition for PredicateCondition<Predicate> {
     }
 
     fn update(&mut self, dt: Duration) {
-        if self.predicate() {
+        if (self.predicate)() {
             self.should_trigger = true;
         }
     }
