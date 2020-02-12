@@ -1,4 +1,4 @@
-use crate::types::task_id::TaskId;
+use crate::types::id::TaskId;
 
 pub trait TaskCondition {
     fn is_finished(&self) -> bool;

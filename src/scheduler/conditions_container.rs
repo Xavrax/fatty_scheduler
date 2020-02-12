@@ -1,5 +1,5 @@
 use crate::tasks_conditions::task_condition::TaskCondition;
-use crate::types::task_id::TaskId;
+use crate::types::id::TaskId;
 use crate::scheduler::conditions::Conditions;
 use std::time::Duration;
 

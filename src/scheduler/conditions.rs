@@ -1,5 +1,5 @@
 use crate::tasks_conditions::task_condition::TaskCondition;
-use crate::types::task_id::TaskId;
+use crate::types::id::TaskId;
 use std::time::Duration;
 use core::borrow::BorrowMut;
 use std::io::Write;
