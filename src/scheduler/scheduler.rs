@@ -7,7 +7,7 @@ struct Scheduler<Action : Fn()>{
 }
 
 impl <Action : Fn()> Scheduler<Action> {
-    fn new() {
+    fn new() -> Scheduler<Action> {
         let conditions = ConditionContainer::new();
         let tasks = Vec::<ScheduledTask<Action>>::new();
         Scheduler {
