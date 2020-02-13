@@ -1,10 +1,23 @@
 use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
 
-struct RepetitiveCondition {
+pub struct RepetitiveCondition {
     interval : Duration,
     timeout : Duration,
     should_trigger : bool,
+}
+
+impl RepetitiveCondition {
+    pub fn new(interval : Duration) -> RepetitiveCondition {
+        let timeout = interval;
+        let interval = timeout.clone();
+        let should_trigger = false;
+        RepetitiveCondition {
+            timeout,
+            interval,
+            should_trigger
+        }
+    }
 }
 
 impl TaskCondition for RepetitiveCondition {

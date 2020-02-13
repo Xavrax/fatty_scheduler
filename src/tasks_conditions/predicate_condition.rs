@@ -7,6 +7,18 @@ pub struct PredicateCondition<Predicate : Fn() -> bool> {
     should_trigger : bool
 }
 
+impl <Predicate : Fn() -> bool> PredicateCondition<Predicate> {
+    pub fn new(predicate : Predicate) -> PredicateCondition<Predicate> {
+        let finished = false;
+        let should_trigger = false;
+        PredicateCondition {
+            predicate,
+            finished,
+            should_trigger
+        }
+    }
+}
+
 impl<Predicate : Fn() -> bool> TaskCondition for PredicateCondition<Predicate> {
     fn is_finished(&self) -> bool {
         self.finished

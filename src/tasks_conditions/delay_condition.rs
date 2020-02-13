@@ -1,10 +1,23 @@
 use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
 
-struct DelayCondition {
+pub struct DelayCondition {
     timeout : Duration,
     finished : bool,
     should_trigger : bool,
+}
+
+impl DelayCondition {
+    pub fn new(delay : Duration) -> DelayCondition {
+        let timeout = delay;
+        let finished = false;
+        let should_trigger = false;
+        DelayCondition {
+            timeout,
+            finished,
+            should_trigger
+        }
+    }
 }
 
 impl TaskCondition for DelayCondition {
