@@ -7,19 +7,19 @@ use std::any::{TypeId, Any};
 
 pub struct Conditions {
     id : TaskId,
-    conditions : Vec<Box<TaskCondition>>
+    conditions : Vec<Box<dyn TaskCondition>>
 }
 
 impl Conditions {
     pub fn new(id : TaskId) -> Conditions {
-        let conditions = Vec::<Box<TaskCondition>>::new();
+        let conditions = Vec::<Box<dyn TaskCondition>>::new();
         Conditions {
             id,
             conditions
         }
     }
 
-    pub fn add(&mut self, condition : Box<TaskCondition>) {
+    pub fn add(&mut self, condition : Box<dyn TaskCondition>) {
         self.conditions.push(condition);
     }
 

@@ -5,29 +5,28 @@ use crate::tasks_conditions::predicate_condition::PredicateCondition;
 use std::time::Duration;
 
 pub struct SchedulingBuilder {
-    conditions : Vec<Box<TaskCondition>>
+    conditions : Vec<Box<dyn TaskCondition>>
 }
 
 impl SchedulingBuilder {
-    fn new() -> SchedulingBuilder {
-        let conditions = Vec::<Box<TaskCondition>>::new();
+    pub fn new() -> SchedulingBuilder {
         SchedulingBuilder {
-            conditions
+            conditions :  Vec::<Box<dyn TaskCondition>>::new()
         }
     }
 
-    fn after(&mut self, delay : Duration) -> &mut SchedulingBuilder {
+    pub fn after(&mut self, delay : Duration) -> &mut SchedulingBuilder {
         self.conditions.push(Box::new(DelayCondition::new(delay)));
         self
     }
 
-    fn every(&mut self, interval : Duration) -> &mut SchedulingBuilder {
+    pub fn every(&mut self, interval : Duration) -> &mut SchedulingBuilder {
         self.conditions.push(Box::new(RepetitiveCondition::new(interval)));
         self
     }
 
-    fn when<Predicate : Fn() -> bool>(&mut self, predicate : Predicate) -> &mut SchedulingBuilder {
-//        self.conditions.push(Box::new(PredicateCondition::new(predicate)));
-        self
+    pub fn when(&mut self, predicate : impl Fn() -> bool) -> &mut SchedulingBuilder {
+       self.conditions.push(Box::new(PredicateCondition::new(predicate)));
+       self
     }
 }

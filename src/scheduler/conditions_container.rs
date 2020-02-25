@@ -9,9 +9,8 @@ pub struct ConditionContainer {
 
 impl ConditionContainer {
     pub fn new() -> ConditionContainer {
-        let containers = Vec::<Conditions>::new();
         ConditionContainer{
-            containers
+            containers : Vec::<Conditions>::new()
         }
     }
 

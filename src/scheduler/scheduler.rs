@@ -1,18 +1,16 @@
 use crate::scheduler::conditions_container::ConditionContainer;
 use crate::scheduler::scheduled_task::ScheduledTask;
 
-struct Scheduler<Action : Fn()>{
+pub struct Scheduler<Action : FnMut()>{
     conditions : ConditionContainer,
     tasks : Vec<ScheduledTask<Action>>
 }
 
-impl <Action : Fn()> Scheduler<Action> {
-    fn new() -> Scheduler<Action> {
-        let conditions = ConditionContainer::new();
-        let tasks = Vec::<ScheduledTask<Action>>::new();
+impl <Action : FnMut()> Scheduler<Action> {
+    pub fn new() -> Scheduler<Action> {
         Scheduler {
-            conditions,
-            tasks
+            conditions : ConditionContainer::new(),
+            tasks : Vec::<ScheduledTask<Action>>::new()
         }
     }
 
