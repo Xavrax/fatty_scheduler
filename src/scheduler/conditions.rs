@@ -11,8 +11,7 @@ pub struct Conditions {
 }
 
 impl Conditions {
-    pub fn new(id : TaskId) -> Conditions {
-        let conditions = Vec::<Box<dyn TaskCondition>>::new();
+    pub fn new(id : TaskId, conditions : Vec<Box<dyn TaskCondition>>) -> Conditions {
         Conditions {
             id,
             conditions

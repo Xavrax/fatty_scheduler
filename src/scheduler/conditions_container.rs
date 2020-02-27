@@ -14,17 +14,16 @@ impl ConditionContainer {
         }
     }
 
-//    pub fn add(&mut self, id : TaskId) {
-//        self.containers.push(Conditions::new(id))
-//    }
+   pub fn push(&mut self, conditions : Conditions) {
+       self.containers.push(conditions)
+   }
 
     pub fn update_and_get_triggered(&mut self, dt : &Duration) -> Vec<TaskId> {
         let mut triggered = Vec::new();
-
         self.containers
             .iter_mut()
             .for_each(|c|{
-                if c.are_finished() {
+                if !c.are_finished() {
                     c.update(dt);
 
                     if c.should_trigger() {

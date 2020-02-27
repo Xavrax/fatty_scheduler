@@ -6,7 +6,7 @@ pub struct ScheduledTask<Predicate : FnMut()> {
 }
 
 impl <Predicate : FnMut()> ScheduledTask<Predicate> {
-    fn new (id : TaskId, action : Predicate) -> ScheduledTask<Predicate> {
+    pub fn new (id : TaskId, action : Predicate) -> ScheduledTask<Predicate> {
         ScheduledTask {
             id,
             action
@@ -17,7 +17,7 @@ impl <Predicate : FnMut()> ScheduledTask<Predicate> {
         self.id
     }
 
-    fn execute(&self) {
+    pub fn execute(&mut self) {
         (self.action)()
     }
 }
