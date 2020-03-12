@@ -1,15 +1,15 @@
 use crate::types::id::TaskId;
 
-pub struct ScheduledTask<Predicate : FnMut()> {
+pub struct ScheduledTask {
     id : TaskId,
-    action : Predicate
+    action : Box<dyn FnMut()>
 }
 
-impl <Predicate : FnMut()> ScheduledTask<Predicate> {
-    pub fn new (id : TaskId, action : Predicate) -> ScheduledTask<Predicate> {
+impl ScheduledTask {
+    pub fn new <Action : FnMut() + 'static> (id : TaskId, action : Action) -> ScheduledTask {
         ScheduledTask {
             id,
-            action
+            action : Box::new(action)
         }
     }
 

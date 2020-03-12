@@ -5,28 +5,28 @@ pub struct RepetitiveCondition {
     interval : Duration,
     timeout : Duration,
     should_trigger : bool,
+    stop_condition : Box<dyn Fn() -> bool>
 }
 
 impl RepetitiveCondition {
-    pub fn new(interval : Duration) -> RepetitiveCondition {
-        let timeout = interval;
-        let interval = timeout.clone();
-        let should_trigger = false;
+    pub fn new (interval : Duration, stop_condition : Box<dyn Fn() -> bool>) -> RepetitiveCondition {
+        let timeout = interval.clone();
         RepetitiveCondition {
-            timeout,
             interval,
-            should_trigger
+            timeout,
+            should_trigger : false,
+            stop_condition
         }
     }
 }
 
 impl TaskCondition for RepetitiveCondition {
     fn is_finished(&self) -> bool {
-        false
+        !(*self.stop_condition)()
     }
 
     fn should_trigger(&self) -> bool {
-        self.should_trigger
+        self.should_trigger && !self.is_finished()
     }
 
     fn update(&mut self, dt: &Duration) {
