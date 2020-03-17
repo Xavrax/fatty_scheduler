@@ -1,5 +1,3 @@
-use crate::types::id::TaskId;
-
 pub trait TaskCondition {
     fn is_finished(&self) -> bool;
     fn should_trigger(&self) -> bool;

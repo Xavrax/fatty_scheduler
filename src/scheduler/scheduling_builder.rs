@@ -1,6 +1,5 @@
 use crate::tasks_conditions::task_condition::TaskCondition;
 use crate::tasks_conditions::delay_condition::DelayCondition;
-use crate::tasks_conditions::repetitive_condition::RepetitiveCondition;
 use crate::tasks_conditions::predicate_condition::PredicateCondition;
 use std::time::Duration;
 use crate::scheduler::scheduler::Scheduler;
@@ -35,7 +34,7 @@ impl <'scheduler_lifetime> SchedulingBuilder<'scheduler_lifetime> {
         self
     }
 
-    pub fn execute <Action : FnMut() + 'static>(&mut self, action : Action) {
-        self.scheduler.add_task(std::mem::replace(&mut self.conditions, VecDeque::new()), ScheduledTask::new(0, action))
+    pub fn execute <Action : FnMut() + 'static>(&mut self, action : Action) -> Result<usize, &str> {
+        self.scheduler.add_task(std::mem::replace(&mut self.conditions, VecDeque::new()), ScheduledTask::new(action))
     }
 }

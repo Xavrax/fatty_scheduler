@@ -1,11 +1,8 @@
-use crate::scheduler::conditions_container::ConditionContainer;
 use crate::scheduler::scheduled_task::ScheduledTask;
 use crate::scheduler::scheduling_builder::SchedulingBuilder;
 use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
-use crate::scheduler::conditions::Conditions;
 use std::collections::VecDeque;
-use std::borrow::{Borrow, BorrowMut};
 
 pub struct Scheduler {
     // conditions : ConditionContainer,
@@ -28,7 +25,7 @@ impl Scheduler {
        let mut to_chain_pop = Vec::new();
        let mut to_remove = Vec::new();
 
-       for mut condition in &mut self.conditions {
+       for condition in &mut self.conditions {
            condition.update(&dt);
            if condition.should_trigger() {
                condition.finish();
@@ -51,22 +48,27 @@ impl Scheduler {
            .for_each(|i| self.conditions[*i] = self.condition_chains[*i].pop_front().unwrap());
 
        to_remove.iter()
-           .for_each(|i| self.remove_task(*i))
+           .for_each(|i| self.remove_task(*i).unwrap())
    }
 
    pub fn schedule(&mut self) -> SchedulingBuilder {
        SchedulingBuilder::new(self)
    }
 
-   pub fn add_task(&mut self, mut conditions: VecDeque<Box<dyn TaskCondition>>, task : ScheduledTask) {
+   pub fn add_task(&mut self, mut conditions: VecDeque<Box<dyn TaskCondition>>, task : ScheduledTask) -> Result<usize, &str> {
        self.tasks.push(task);
-       self.conditions.push(conditions.pop_front().unwrap());
+       match conditions.pop_front() {
+           Some(c) => self.conditions.push(c),
+           None => return Err("Empty condition collection!")
+       }
        self.condition_chains.push(conditions);
+       Ok(self.tasks.len() - 1)
    }
 
-    fn remove_task(&mut self, index : usize) {
+    fn remove_task(&mut self, index : usize) -> Result<(), &str>{
         self.tasks.remove(index);
         self.conditions.remove(index);
         self.condition_chains.remove(index);
+        Ok(())
     }
 }
