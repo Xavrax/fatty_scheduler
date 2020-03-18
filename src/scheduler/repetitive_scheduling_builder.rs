@@ -22,6 +22,7 @@ impl <'scheduler_lifetime> RepetitiveSchedulingBuilder<'scheduler_lifetime> {
         }
     }
 
+    // todo: deal with lifetimes!
     pub fn as_long_as(&mut self, predicate : impl Fn() -> bool + 'static) -> &'scheduler_lifetime mut RepetitiveSchedulingBuilder {
         self.stop_condition = Box::new(predicate);
         self

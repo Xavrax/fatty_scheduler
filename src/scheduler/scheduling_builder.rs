@@ -29,6 +29,7 @@ impl <'scheduler_lifetime> SchedulingBuilder<'scheduler_lifetime> {
         RepetitiveSchedulingBuilder::new(self.scheduler, interval)
     }
 
+    // todo: deal with lifetimes!
     pub fn when(&mut self, predicate : impl Fn() -> bool + 'static) -> &'scheduler_lifetime mut SchedulingBuilder {
         self.conditions.push_back(Box::new(PredicateCondition::new(predicate)));
         self
