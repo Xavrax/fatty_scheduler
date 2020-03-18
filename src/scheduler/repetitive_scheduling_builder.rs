@@ -1,9 +1,9 @@
 use crate::scheduler::scheduler::Scheduler;
 use crate::tasks_conditions::task_condition::TaskCondition;
 use crate::tasks_conditions::repetitive_condition::RepetitiveCondition;
+use crate::scheduler::scheduled_task::ScheduledTask;
 use std::time::Duration;
 use std::collections::VecDeque;
-use crate::scheduler::scheduled_task::ScheduledTask;
 
 pub struct RepetitiveSchedulingBuilder<'scheduler_lifetime> {
     scheduler : &'scheduler_lifetime mut Scheduler,
@@ -16,7 +16,7 @@ impl <'scheduler_lifetime> RepetitiveSchedulingBuilder<'scheduler_lifetime> {
     pub fn new(scheduler: &'scheduler_lifetime mut Scheduler, interval : Duration) -> RepetitiveSchedulingBuilder<'scheduler_lifetime> {
         RepetitiveSchedulingBuilder {
             scheduler,
-            conditions: VecDeque::<Box<dyn TaskCondition>>::new(),
+            conditions: VecDeque::new(),
             interval,
             stop_condition : Box::new(|| true)
         }

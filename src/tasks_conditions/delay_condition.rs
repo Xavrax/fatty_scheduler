@@ -1,5 +1,5 @@
-use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
+use std::time::Duration;
 
 pub struct DelayCondition {
     timeout : Duration,

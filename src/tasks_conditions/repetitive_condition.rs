@@ -1,15 +1,15 @@
-use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
+use std::time::Duration;
 
-pub struct RepetitiveCondition {
+pub struct RepetitiveCondition<'condition_lifetime> {
     interval : Duration,
     timeout : Duration,
     should_trigger : bool,
-    stop_condition : Box<dyn Fn() -> bool>
+    stop_condition : Box<dyn Fn() -> bool + 'condition_lifetime>
 }
 
-impl RepetitiveCondition {
-    pub fn new (interval : Duration, stop_condition : Box<dyn Fn() -> bool>) -> RepetitiveCondition {
+impl<'condition_lifetime> RepetitiveCondition<'condition_lifetime> {
+    pub fn new (interval : Duration, stop_condition : Box<dyn Fn() -> bool + 'condition_lifetime>) -> RepetitiveCondition<'condition_lifetime> {
         let timeout = interval.clone();
         RepetitiveCondition {
             interval,
@@ -20,7 +20,7 @@ impl RepetitiveCondition {
     }
 }
 
-impl TaskCondition for RepetitiveCondition {
+impl<'condition_lifetime> TaskCondition for RepetitiveCondition<'condition_lifetime> {
     fn is_finished(&self) -> bool {
         !(*self.stop_condition)()
     }

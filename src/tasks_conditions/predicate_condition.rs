@@ -1,23 +1,23 @@
 use crate::tasks_conditions::task_condition::TaskCondition;
 use std::time::Duration;
 
-pub struct PredicateCondition <Predicate : Fn() -> bool> {
-    predicate : Predicate,
+pub struct PredicateCondition <'condition_lifetime> {
+    predicate : Box<dyn Fn() -> bool + 'condition_lifetime>,
     finished : bool,
     should_trigger : bool
 }
 
-impl <Predicate : Fn() -> bool> PredicateCondition <Predicate> {
-    pub fn new(predicate : Predicate) -> PredicateCondition <Predicate> {
+impl <'condition_lifetime> PredicateCondition <'condition_lifetime> {
+    pub fn new(predicate : impl Fn() -> bool + 'condition_lifetime) -> PredicateCondition <'condition_lifetime> {
         PredicateCondition {
-            predicate,
+            predicate : Box::new(predicate),
             finished : false,
             should_trigger: false
         }
     }
 }
 
-impl <Predicate : Fn() -> bool> TaskCondition for PredicateCondition <Predicate> {
+impl <'condition_lifetime> TaskCondition for PredicateCondition <'condition_lifetime> {
     fn is_finished(&self) -> bool {
         self.finished
     }

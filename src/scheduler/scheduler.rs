@@ -1,7 +1,7 @@
 use crate::scheduler::scheduled_task::ScheduledTask;
 use crate::scheduler::scheduling_builder::SchedulingBuilder;
-use std::time::Duration;
 use crate::tasks_conditions::task_condition::TaskCondition;
+use std::time::Duration;
 use std::collections::VecDeque;
 
 pub struct Scheduler {
