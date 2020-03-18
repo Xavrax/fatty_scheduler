@@ -3,6 +3,12 @@ name = "fatty_scheduler"
 version = "0.1.1"
 authors = ["Mateusz Dahlke <1i13i.dahlke@gmail.com>"]
 edition = "2018"
+description="A simple Rust task scheduler with easy to use condition system. (In progress)"
+readme = "README.md"
+repository = "https://github.com/Xavrax/fatty_scheduler"
+keywords = ["scheduler", "task", "job"]
+categories = ["date-and-time"]
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
