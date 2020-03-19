@@ -72,3 +72,6 @@ impl Scheduler {
         Ok(())
     }
 }
+
+unsafe impl Send for Scheduler {}
+unsafe impl Sync for Scheduler {}
