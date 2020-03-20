@@ -47,8 +47,12 @@ impl Scheduler {
        to_chain_pop.iter()
            .for_each(|i| self.conditions[*i] = self.condition_chains[*i].pop_front().unwrap());
 
+       let mut popped = 0usize;
        to_remove.iter()
-           .for_each(|i| self.remove_task(*i).unwrap())
+           .for_each(|i| {
+               self.remove_task(*i - popped).unwrap();
+               popped += 1;
+           });
    }
 
    pub fn schedule(&mut self) -> SchedulingBuilder {
